@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4f0">
+  <meta name="description" content="Turn facial motion into a wireframe over your depth video, entirely on your computer.">
+  <title>Mesh Studio — Video to wireframe</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7z"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h7m4 0h5M4 17h3m4 0h9M11 4v6M7 14v6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 10 5-3v10l-5-3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 5m0 3h.01"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-mesh" viewBox="0 0 32 32"><path d="m16 2 12 7v14l-12 7L4 23V9Zm0 0v28M4 9l24 14M28 9 4 23M4 9l12 7 12-7M4 23l12-7 12 7"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Mesh Studio home"><span class="brand-mark"><svg><use href="#i-mesh"/></svg></span>mesh<span class="brand-light">studio</span><span class="local-label">LOCAL</span></a>
+    <div class="top-actions"><span id="engine-status" class="engine-status"><span class="status-dot"></span><span>Connecting to engine</span></span><button id="help-button" class="icon-button" aria-label="How it works"><svg><use href="#i-help"/></svg></button></div>
+  </header>
+
+  <main>
+    <div class="page-heading"><div><div class="eyebrow"><span></span> THE MOTION WORKSPACE</div><h1>A little structure.<br> A lot of expression.</h1><p>Turn facial movement into a wireframe on your depth video.</p></div><div class="heading-note"><svg><use href="#i-lock"/></svg><div>Made on your machine.<br><span>Your videos stay with you.</span></div></div></div>
+
+    <div class="workspace">
+      <section class="input-panel" aria-labelledby="inputs-heading">
+        <div class="section-title"><div><span class="step-badge">01</span><h2 id="inputs-heading">Add your videos</h2></div><span class="section-meta">Two clips. One output.</span></div>
+        <div class="uploads">
+          <div class="upload-card" data-kind="original">
+            <div class="card-heading"><span><span class="clip-dot original-dot"></span>Original video</span><span class="card-tag">RGB</span></div>
+            <div class="drop-zone" id="drop-original">
+              <input id="file-original" type="file" accept="video/*,.mp4,.mov,.mkv,.webm,.m4v,.avi" aria-label="Choose original video">
+              <label class="drop-content" for="file-original"><span class="upload-icon"><svg><use href="#i-video"/></svg></span><strong>Drop your original here</strong><span>or <span class="browse">browse files</span></span></label>
+              <video id="preview-original" controls playsinline preload="metadata" hidden></video>
+              <button type="button" class="remove-file" id="remove-original" aria-label="Remove original video" hidden><svg><use href="#i-x"/></svg></button>
+            </div>
+            <div class="file-description"><span id="name-original">The video with the facial motion</span><span id="meta-original">MP4, MOV & more</span></div>
+          </div>
+          <div class="upload-card" data-kind="depth">
+            <div class="card-heading"><span><span class="clip-dot depth-dot"></span>Depth video</span><span class="card-tag">DEPTH</span></div>
+            <div class="drop-zone" id="drop-depth">
+              <input id="file-depth" type="file" accept="video/*,.mp4,.mov,.mkv,.webm,.m4v,.avi" aria-label="Choose matching depth video">
+              <label class="drop-content" for="file-depth"><span class="upload-icon depth-icon"><svg><use href="#i-video"/></svg></span><strong>Drop your depth clip here</strong><span>or <span class="browse">browse files</span></span></label>
+              <video id="preview-depth" controls playsinline preload="metadata" hidden></video>
+              <button type="button" class="remove-file" id="remove-depth" aria-label="Remove depth video" hidden><svg><use href="#i-x"/></svg></button>
+            </div>
+            <div class="file-description"><span id="name-depth">The matching depth-map export</span><span id="meta-depth">Same framing & start point</span></div>
+          </div>
+        </div>
+        <p class="pair-hint"><svg><use href="#i-check"/></svg>Use matching, untrimmed clips. Different resolutions are fine.</p>
+
+        <details class="settings" id="settings"><summary><span><svg><use href="#i-sliders"/></svg>Wireframe settings<span class="settings-summary" id="settings-summary">Dense mesh · Cyan · Up to 4 faces</span></span><svg class="chevron"><use href="#i-chevron"/></svg></summary>
+          <div class="settings-grid">
+            <label>Drawing style<select id="style"><option value="mesh">Dense mesh</option><option value="contours">Facial contours</option><option value="dots">Landmark dots</option></select></label>
+            <label>Maximum faces<select id="max-faces"><option value="1">1 face</option><option value="2">2 faces</option><option value="4" selected>4 faces</option><option value="8">8 faces</option></select></label>
+            <label>Line color<div class="color-control"><input type="color" id="color" value="#00ffff" aria-label="Wireframe color"><span id="color-value">#00FFFF</span></div></label>
+            <label>Line thickness<select id="thickness"><option value="1">Fine · 1 px</option><option value="2">Medium · 2 px</option><option value="3">Bold · 3 px</option></select></label>
+            <label class="opacity-label">Opacity <output for="opacity" id="opacity-value">80%</output><input id="opacity" type="range" min="10" max="100" value="80"></label>
+          </div>
+        </details>
+
+        <div class="create-area"><button class="primary-button" id="create-button" disabled><svg><use href="#i-mesh"/></svg><span>Create wireframe</span><svg class="button-arrow"><use href="#i-arrow"/></svg></button><p id="create-hint">Add both videos to get started</p></div>
+        <div class="error-banner" id="error-banner" role="alert" hidden><strong id="error-title">Something needs a second look</strong><p id="error-message"></p></div>
+        <div class="progress-card" id="progress-card" aria-live="polite" hidden><div class="progress-heading"><span class="processing-indicator"></span><strong id="progress-message">Preparing your videos</strong><span id="progress-percent">0%</span></div><progress id="progress-bar" value="0" max="100">0%</progress><div class="progress-bottom"><ol class="stage-list"><li data-stage="uploading">Upload</li><li data-stage="checking">Check</li><li data-stage="tracking">Track</li><li data-stage="rendering">Render</li></ol><button id="cancel-button" type="button" class="text-button">Cancel run</button></div></div>
+        <div class="process-note"><svg><use href="#i-lock"/></svg><span>Local processing<span class="note-separator">/</span>No cloud uploads<span class="note-separator">/</span>Silent MP4 export</span></div>
+      </section>
+
+      <section class="output-panel" aria-labelledby="output-heading"><div class="section-title"><div><span class="step-badge output-badge">02</span><h2 id="output-heading">Your wireframe</h2></div><span class="output-state" id="output-state">PREVIEW</span></div>
+        <div class="result-stage" id="result-stage"><div class="stage-grid"></div><div class="stage-corner top-left"></div><div class="stage-corner top-right"></div><div class="stage-corner bottom-left"></div><div class="stage-corner bottom-right"></div>
+          <div id="empty-result" class="empty-result"><div class="face-illustration" aria-hidden="true"><svg viewBox="0 0 240 260"><defs><linearGradient id="face-gradient" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4a784"/><stop offset="1" stop-color="#685f59"/></linearGradient></defs><g fill="none" stroke="url(#face-gradient)" stroke-width=".8"><path d="m120 20 38 8 28 29 14 42-6 47-19 45-30 29-25 13-25-13-30-29-19-45-6-47 14-42 28-29Z"/><path d="m120 20-24 42 24-10 24 10-24-42Zm-38 8 14 34-42-5 24 33-38 9 30 24-24 23 36 12-17 33 34-9-4 38 25-20 25 20-4-38 34 9-17-33 36-12-24-23 30-24-38-9 24-33-42 5 14-34M96 62l-18 28 26-8 16 18 16-18 26 8-18-28M54 57l42 5 8 20m40-20-8 20 26 8 24-33M78 90l-8 33 26-16 8-25M162 90l8 33-26-16-8-25M40 99l38-9 18 17-26 16-24 23M200 99l-38-9-18 17 26 16 24 23M96 107l24-7 24 7-9 31-15-12-15 12-9-31M120 52v48m0 26v24m-15-12 15 12 15-12M70 123l12 35 23-20-9-31m74 16-12 35-23-20 9-31M46 146l36 12 17 24 21-15 21 15 17-24 36-12M82 158l25 2 13 7 13-7 25-2M99 182l21 18 21-18m-46 38 25-20 25 20m-25-20v33M65 191l34-9-17-24m93 33-34-9 17-24M96 62l24-10 24 10-8 20-16 18-16-18Z"/><path d="m78 90 11 1 15-9m58 8-11 1-15-9M82 158l17 24 8-22m51-2-17 24-8-22"/></g><g fill="#d9a58b"><circle cx="120" cy="20" r="2"/><circle cx="78" cy="90" r="2"/><circle cx="162" cy="90" r="2"/><circle cx="120" cy="126" r="2"/><circle cx="82" cy="158" r="2"/><circle cx="158" cy="158" r="2"/><circle cx="120" cy="200" r="2"/><circle cx="120" cy="233" r="2"/></g></svg></div><h3 id="empty-title">Motion, mapped.</h3><p id="empty-description">Your finished video will appear here.<br>Ready to preview, ready to save.</p><span class="preview-pill"><span></span>478 facial landmarks</span></div>
+          <video id="result-video" controls playsinline preload="metadata" hidden></video>
+          <div id="rendering-overlay" class="rendering-overlay" hidden><span class="render-spinner"></span><span id="rendering-label">Working on your video</span></div>
+        </div>
+        <div class="output-info"><div><svg><use href="#i-video"/></svg><span id="result-format">H.264 MP4</span></div><span id="result-detail">Original depth resolution</span></div>
+        <div class="result-controls"><div class="view-tabs" role="group" aria-label="Video preview"><button id="view-result" class="active" disabled>Final video</button><button id="view-comparison" disabled>Comparison</button></div><button id="save-button" class="save-button" disabled><svg><use href="#i-download"/></svg><span>Save video</span></button></div>
+        <p class="save-hint" id="save-hint">Choose where to save once your video is ready.</p><div class="result-notes" id="result-notes" hidden></div>
+      </section>
+    </div>
+
+    <section class="history-section" aria-labelledby="history-heading"><div class="history-heading"><h2 id="history-heading"><svg><use href="#i-clock"/></svg>Recent runs</h2><span>Saved on this computer</span></div><div class="history-list" id="history-list"><p class="history-empty">Your finished videos will be kept here, so you can come back to them.</p></div></section>
+    <footer><span>MESH STUDIO <span class="footer-divider">/</span> A clearer picture of motion.</span><span>Built for your local workflow <span class="footer-dot"></span></span></footer>
+  </main>
+
+  <dialog id="help-dialog"><button class="dialog-close icon-button" id="close-help" aria-label="Close help"><svg><use href="#i-x"/></svg></button><div class="eyebrow">THREE SIMPLE STEPS</div><h2>From footage to facial motion.</h2><ol class="help-steps"><li><strong>Add your pair.</strong><p>Select the original color video and its matching depth-map export. Keep the same framing and start point.</p></li><li><strong>Create your wireframe.</strong><p>The local engine checks timing, tracks faces, and draws the mesh onto the depth clip. You can keep using this page while it works.</p></li><li><strong>Preview and save.</strong><p>Review the final clip or the side-by-side comparison. Save video opens a location picker when your browser supports it, or downloads the file.</p></li></ol><p class="help-footnote">Turned or obscured faces may have gaps in the mesh. This app assumes matching framing; use the comparison to check alignment. Runs stay in the project’s outputs/web folder. All processing happens on this PC.</p></dialog>
+</body>
+</html>

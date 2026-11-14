@@ -1,0 +1,4 @@
+# MediaPipe Tasks API. Install only the OpenCV distribution it depends on.
+mediapipe==1.2.3
+# Timestamp-aware video I/O using bundled FFmpeg libraries.
+av

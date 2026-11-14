@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+  <title id="title">Motion Transfer</title>
+  <desc id="desc">An abstract facial wireframe beside the words Depth, performance, and a new character.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#111827"/><stop offset="1" stop-color="#112e37"/></linearGradient>
+    <linearGradient id="line"><stop stop-color="#5eead4"/><stop offset="1" stop-color="#38bdf8"/></linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#b8f7ee" stroke-opacity=".05"/></pattern>
+  </defs>
+  <rect width="1280" height="360" rx="24" fill="url(#bg)"/>
+  <rect width="1280" height="360" rx="24" fill="url(#grid)"/>
+  <rect x="64" y="66" width="180" height="28" rx="14" fill="#5eead4" fill-opacity=".12"/>
+  <text x="80" y="85" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" letter-spacing="2" fill="#99f6e4">MESH STUDIO</text>
+  <text x="64" y="169" font-family="Segoe UI,Arial,sans-serif" font-size="64" font-weight="700" letter-spacing="-2" fill="#f8fafc">Motion Transfer</text>
+  <text x="67" y="216" font-family="Segoe UI,Arial,sans-serif" font-size="24" fill="#b6ccd3">Depth. Performance. A new character.</text>
+  <text x="67" y="282" font-family="Segoe UI,Arial,sans-serif" font-size="15" letter-spacing="1" fill="#7dd3c7">PREPARE  /  REVIEW  /  COMPOSITE  /  CREATE</text>
+  <g transform="translate(906 34)" fill="none" stroke="url(#line)" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M110 8 164 28 196 75 206 134 190 198 155 248 110 282 65 248 30 198 14 134 24 75 56 28Z"/>
+    <path d="M110 8 83 62 110 51 137 62 110 8M56 28 83 62 24 75 61 98 14 134 58 144 30 198 77 190 65 248 110 224 155 248 143 190 190 198 162 144 206 134 159 98 196 75 137 62 164 28"/>
+    <path d="M83 62 61 98 87 111 110 91 133 111 159 98 137 62M24 75 61 98 58 144 87 111 95 151 110 163 125 151 133 111 162 144 159 98 196 75M110 51V91M110 91V163M58 144 77 190 95 151M162 144 143 190 125 151M30 198 77 190 110 224 143 190 190 198M77 190 110 179 143 190 110 202 77 190M110 224V282M65 248 77 190M155 248 143 190"/>
+    <path d="M61 98 75 93 87 111 70 111ZM159 98 145 93 133 111 150 111Z" stroke-opacity=".6"/>
+  </g>
+  <g fill="#99f6e4"><circle cx="1016" cy="42" r="4"/><circle cx="967" cy="132" r="4"/><circle cx="1065" cy="132" r="4"/><circle cx="1016" cy="197" r="4"/><circle cx="983" cy="224" r="4"/><circle cx="1049" cy="224" r="4"/><circle cx="1016" cy="316" r="4"/></g>
+</svg>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Local Motion Transfer"
+  short_description: "Depth wireframes, rotoscoping and custom video prompts"
+  default_prompt: "Use $local-motion-transfer to prepare my original/depth video pair and guide me through compositing and a custom reference-to-video prompt."
