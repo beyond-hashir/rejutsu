@@ -91,6 +91,28 @@ class ColabMediaTests(unittest.TestCase):
         self.assertTrue(report["colored"])
         self.assertEqual(app.frame_rate(app.probe(result[0])), Fraction(30000, 1001))
 
+    def test_unusual_fractional_rate_preserves_exact_frame_timestamps(self):
+        # An irregular source average must not be rounded by rawvideo encoding.
+        rate = Fraction(13365000, 445981)
+        source = self.folder / "unusual-fps.mp4"
+        app.run_command([
+            "ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+            f"testsrc2=size=160x96:rate={rate}", "-frames:v", "12",
+            "-c:v", "libx264", "-pix_fmt", "yuv420p",
+            "-video_track_timescale", str(rate.numerator), source,
+        ])
+        with patch.object(app, "load_model", return_value=DummyDepthModel()):
+            result = app.convert_video(source, "Small", 392, "Whole video (fixed contrast)", False, False, 0)
+        for path in result[:2]:
+            self.assertEqual(app.frame_rate(app.probe(path)), rate)
+        def pts(path):
+            data = json.loads(app.run_command([
+                "ffprobe", "-v", "error", "-select_streams", "v:0", "-show_frames",
+                "-show_entries", "frame=best_effort_timestamp_time", "-of", "json", path,
+            ]))
+            return [frame["best_effort_timestamp_time"] for frame in data["frames"]]
+        self.assertEqual(pts(result[0]), pts(result[1]))
+
     def test_rotation_and_pixel_aspect_are_normalized(self):
         rotated = self.folder / "rotated.mp4"
         app.run_command(["ffmpeg", "-v", "error", "-y", "-display_rotation", "90", "-i", self.source,

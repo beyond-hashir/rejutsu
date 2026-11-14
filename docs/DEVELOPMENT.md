@@ -59,7 +59,7 @@ Do not copy `.venv/` between PCs. Setup preserves an incompatible copied environ
 | --- | --- |
 | `test_mesh_core.py` | Timestamp matching, mapping, invalid coordinates, association, gaps, shot resets, and ambiguity |
 | `test_web_server.py` | Local HTTP session/origin checks, upload lifecycle, cancellation, file boundaries, range/download responses, settings, and restart recovery |
-| `test_depth_colab_notebook.py` | Standalone notebook structure, code compilation, synthetic video conversion, matching bundles, fractional/variable FPS, rotation/pixel normalization, and failure cleanup |
+| `test_depth_colab_notebook.py` | Standalone notebook structure, code compilation, synthetic video conversion, matching bundles, exact timestamps at standard/unusual fractional FPS, variable FPS, rotation/pixel normalization, and failure cleanup |
 | `validate_workflow.py` | Generated moving two-portrait fixture, full tracking/rendering, cached-landmark rendering with inference disabled, input-hash rejection, and full decoding |
 
 Unit-test discovery includes localhost HTTP tests. The integration validator rejects Python socket connection/DNS/bind/send operations during its process; this does not establish an OS firewall or native-code network isolation.

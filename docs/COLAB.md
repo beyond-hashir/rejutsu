@@ -52,6 +52,7 @@ Next, [open Mesh Studio](WEB_UI.md) on your Windows PC and select `source_refere
 | ZIP is too large | Download the two MP4s separately from the interface or Colab Files sidebar. |
 | Flickering depth | Compare whole-video and per-frame contrast. Neither adds temporal modeling. |
 | Mesh later seems offset | Confirm you selected the exported color reference rather than the pre-normalization upload. |
+| Reference/depth frame-rate mismatch in an older notebook | Reopen the latest notebook and rerun setup and GUI preparation. The encoder preserves exact fractional frame rates, including unusual source averages. |
 
 ## Hosted processing and model licenses
 

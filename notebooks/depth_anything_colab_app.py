@@ -131,6 +131,10 @@ class VideoEncoder:
                 "-f", "rawvideo", "-pix_fmt", "bgr24", "-s:v", f"{width}x{height}",
                 "-r", str(rate), "-i", "pipe:0", "-an", "-c:v", "libx264",
                 "-preset", "fast", "-crf", "16", "-pix_fmt", "yuv420p",
+                # Rawvideo input can approximate unusual rational rates. Keep the
+                # encoder and MP4 clock exact so the reference/depth pair agrees.
+                "-enc_time_base", f"{rate.denominator}:{rate.numerator}",
+                "-video_track_timescale", str(rate.numerator),
                 "-movflags", "+faststart", str(path),
             ], stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=self.log)
         except BaseException:
